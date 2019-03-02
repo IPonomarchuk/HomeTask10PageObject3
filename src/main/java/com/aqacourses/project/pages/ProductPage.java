@@ -8,8 +8,8 @@ import org.openqa.selenium.support.FindBy;
 public class ProductPage extends AbstractPage {
 
     // Web elements
-    @FindBy(xpath = "//h1[@itemprop='name']")
-    private WebElement nameOfProduct;
+    /*@FindBy(xpath = "//h1[@itemprop='name']")
+    private WebElement nameOfProduct;*/
 
     @FindBy(xpath = "//div[@class='breadcrumb clearfix']")
     private WebElement fullBreadcrumb;
@@ -31,12 +31,19 @@ public class ProductPage extends AbstractPage {
     }
 
     /** Verify the last breadcrumb on the ProductPage */
-    public void verifyLastBreadcrumb() {
-        String sFullBreadcrumb = fullBreadcrumb.getText();
-        int lastIndex = sFullBreadcrumb.lastIndexOf(">");
-        String lastBreadcrumb = sFullBreadcrumb.substring(lastIndex + 1);
+    /*public void verifyLastBreadcrumb() {
+        String lastBreadcrumb = fullBreadcrumb.getText().substring(fullBreadcrumb.getText().lastIndexOf(">") + 1);
         Assert.assertEquals(
                 "Last breadcrumb isn't correct", nameOfProduct.getText(), lastBreadcrumb);
+    }*/
+
+    /** Verify breadcrumb on the ProductPage */
+    public void verifyBreadcrumb(String breadcrumb) {
+        String stringBreadcrumb = fullBreadcrumb.getText().replaceFirst("> ", "");
+        Assert.assertEquals(
+                "Breadcrumb isn't correct",
+                breadcrumb,
+                stringBreadcrumb.substring(0, stringBreadcrumb.lastIndexOf(">")));
     }
 
     /**

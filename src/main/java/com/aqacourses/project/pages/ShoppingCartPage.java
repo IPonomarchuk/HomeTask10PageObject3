@@ -40,22 +40,20 @@ public class ShoppingCartPage extends AbstractPage {
 
     /** Increase quantity of product by one */
     public void increaseQuantityOfProductByOne() {
-        String stringQuantity = quantityOfProducts.getAttribute("value");
-        int intQuantity = Integer.parseInt(stringQuantity);
+        int intQuantity = Integer.parseInt(quantityOfProducts.getAttribute("value"));
         plusButton.click();
         testClass.waitTillValueOfElementIsChanged(quantityOfProducts, intQuantity);
+        // testClass.waitTillValueOfElementIsIncreasedByOne(quantityOfProducts, intQuantity);
     }
 
     /** Validate total price */
     public void validateTotalPrice() {
 
-        String stringUnitPrice = unitPrice.getText();
-        BigDecimal bigDecimalUnitPrice = new BigDecimal(stringUnitPrice.replaceAll("[^0-9,.]", ""));
-        String stringTotalPrice = totalPrice.getText();
+        BigDecimal bigDecimalUnitPrice =
+                new BigDecimal(unitPrice.getText().replaceAll("[^0-9,.]", ""));
         BigDecimal bigDecimalTotalPrice =
-                new BigDecimal(stringTotalPrice.replaceAll("[^0-9,.]", ""));
-        String stringQuantity = quantityOfProducts.getAttribute("value");
-        int intQuantity = Integer.parseInt(stringQuantity);
+                new BigDecimal(totalPrice.getText().replaceAll("[^0-9,.]", ""));
+        int intQuantity = Integer.parseInt(quantityOfProducts.getAttribute("value"));
         Assert.assertEquals(
                 "Total price isn't correct",
                 bigDecimalTotalPrice,

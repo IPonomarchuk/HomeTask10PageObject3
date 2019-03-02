@@ -2,8 +2,9 @@ package com.aqacourses.project.pages;
 
 import com.aqacourses.project.base.BaseTest;
 import java.util.List;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
@@ -22,8 +23,8 @@ public abstract class AbstractPage {
     @FindBy(xpath = "//div[@id='block_top_menu']/ul/li/a[@title='T-shirts']")
     private WebElement tShirtsButton;
 
-    @FindBy(xpath = "//span[contains(text(),'More')]")
-    private WebElement moreButton;
+    /*@FindBy(xpath = "//span[contains(text(),'More')]")
+    private WebElement moreButton;*/
 
     @FindBy(xpath = "//div[@class='product-container']")
     protected List<WebElement> listOfProducts;
@@ -33,6 +34,8 @@ public abstract class AbstractPage {
 
     @FindBy(xpath = "//div[@id='page']")
     protected WebElement divPage;
+
+    private String PRODUCT_DETAIL_LINK_XPATH = "//h5/a[@title='%s']";
 
     // Instances of BaseTest
     protected BaseTest testClass;
@@ -93,20 +96,32 @@ public abstract class AbstractPage {
     }
 
     /** Hover over the product */
-    private void hoverOverTheProduct() {
+    /*private void hoverOverTheProduct() {
         Actions actions = new Actions(testClass.getDriver());
         actions.moveToElement(listOfProducts.get(0)).perform();
-    }
+    }*/
 
     /**
      * Open the product
      *
      * @return new instance of ProductPage
      */
-    public ProductPage openProduct() {
+    /*public ProductPage openProduct() {
         testClass.waitTillListOfElementsAreVisible(listOfProducts);
         hoverOverTheProduct();
         moreButton.click();
+        return new ProductPage(testClass);
+    }*/
+
+    /**
+     * Open the product
+     *
+     * @return new instance of ProductPage
+     */
+    public ProductPage openProductByTitle(String title) {
+        testClass.waitTillListOfElementsAreVisible(listOfProducts);
+        WebDriver driver = testClass.getDriver();
+        driver.findElement(By.xpath(String.format(PRODUCT_DETAIL_LINK_XPATH, title))).click();
         return new ProductPage(testClass);
     }
 }

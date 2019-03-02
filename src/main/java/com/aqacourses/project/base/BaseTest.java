@@ -118,12 +118,24 @@ public class BaseTest {
         wait.until(
                 new ExpectedCondition<Boolean>() {
                     public Boolean apply(WebDriver driver) {
-                        String newStringQuantity = element.getAttribute("value");
-                        int newQuantity = Integer.parseInt(newStringQuantity);
+                        int newQuantity = Integer.parseInt(element.getAttribute("value"));
                         if ((newQuantity == quantity + 1) || (newQuantity == quantity - 1)) {
                             return true;
                         } else return false;
                     }
                 });
+    }
+
+    /**
+     * Wait till value of element is increased by one
+     *
+     * @param element
+     * @param quantity
+     */
+    public void waitTillValueOfElementIsIncreasedByOne(WebElement element, int quantity) {
+        quantity = Integer.parseInt(element.getAttribute("value"));
+        wait.until(
+                ExpectedConditions.textToBePresentInElement(
+                        element, Integer.toString(quantity + 1)));
     }
 }

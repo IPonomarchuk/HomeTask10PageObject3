@@ -2,6 +2,7 @@ package com.aqacourses.project.tests;
 
 import com.aqacourses.project.base.BaseTest;
 import com.aqacourses.project.pages.*;
+import com.aqacourses.project.utils.Categories;
 import org.junit.Test;
 
 public class ShoppingCartTest extends BaseTest {
@@ -33,12 +34,13 @@ public class ShoppingCartTest extends BaseTest {
         log("Opened TShirtsPage");
 
         // Open the product
-        ProductPage productPage = tShirtsPage.openProduct();
+        ProductPage productPage = tShirtsPage.openProductByTitle("Faded Short Sleeve T-shirts");
         log("Opened product");
 
-        // Verify the last breadcrumb
-        productPage.verifyLastBreadcrumb();
-        log("Verified the last breadcrumb");
+        // Verify breadcrumb
+        productPage.verifyBreadcrumb(
+                Categories.WOMEN.toString() + ">" + Categories.TOPS + ">" + Categories.TSHIRTS);
+        log("Verified breadcrumb");
 
         // Add product to shopping cart and proceed to checkout
         ShoppingCartPage shoppingCartPage =
