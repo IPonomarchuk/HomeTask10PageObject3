@@ -21,6 +21,9 @@ public class ShoppingCartPage extends AbstractPage {
     @FindBy(xpath = "//td[@class='cart_quantity text-center']/input[@type='hidden']")
     private WebElement quantityOfProducts;
 
+    private String QUANTITY_OF_PRODUCTS_XPATH =
+            "//td[@class='cart_quantity text-center']/input[@type='hidden']";
+
     @FindBy(xpath = "//i[@class='icon-trash']")
     private WebElement deleteButton;
 
@@ -42,8 +45,10 @@ public class ShoppingCartPage extends AbstractPage {
     public void increaseQuantityOfProductByOne() {
         int intQuantity = Integer.parseInt(quantityOfProducts.getAttribute("value"));
         plusButton.click();
-        testClass.waitTillValueOfElementIsChanged(quantityOfProducts, intQuantity);
-        // testClass.waitTillValueOfElementIsIncreasedByOne(quantityOfProducts, intQuantity);
+        System.out.println("Till wait - " + intQuantity);
+        // testClass.waitTillValueOfElementIsChanged(quantityOfProducts, intQuantity);
+        testClass.waitTillValueOfElementIsIncreasedByOne(
+                QUANTITY_OF_PRODUCTS_XPATH, intQuantity + 1);
     }
 
     /** Validate total price */
@@ -54,6 +59,7 @@ public class ShoppingCartPage extends AbstractPage {
         BigDecimal bigDecimalTotalPrice =
                 new BigDecimal(totalPrice.getText().replaceAll("[^0-9,.]", ""));
         int intQuantity = Integer.parseInt(quantityOfProducts.getAttribute("value"));
+        System.out.println("After wait - " + intQuantity);
         Assert.assertEquals(
                 "Total price isn't correct",
                 bigDecimalTotalPrice,
